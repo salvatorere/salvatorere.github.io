@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Shops - Brand Agent GmbH</title>
+    <link rel="icon" href="/api/placeholder/32/32" type="image/x-icon">
+    <style>
+        /* Globale Stile */
+        :root {
+            --primary-color: #8a56c9;
+            --secondary-color: #86868b;
+            --background-color: #f5f5f7;
+            --text-color: #1d1d1f;
+            --accent-color: #7040b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            width: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            max-width: 280px;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+        }
+        
+        .logo span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+        
+        /* Header */
+        .page-header {
+            padding-top: 120px;
+            padding-bottom: 40px;
+            background: linear-gradient(135deg, #f5f5f7 0%, #e0e0e3 100%);
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Hauptcontainer */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        /* Zusammenarbeit-Sektion */
+        .partnership-section {
+            margin-bottom: 5rem;
+            text-align: center;
+        }
+        
+        .partnership-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .partnership-section p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        /* Prozess-Schritte */
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 4rem;
+        }
+        
+        .process-step {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            padding: 1.2rem;
+            width: 23%;
+            min-width: 215px;
+            flex: 1 1 auto;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .process-step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+        
+        .process-step h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: var(--text-color);
+        }
+        
+        .process-step p {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        /* Modelle-Sektion */
+        .models-section {
+            margin-bottom: 5rem;
+        }
+        
+        .models-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+        
+        .models-section p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        .models-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .model-card {
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 580px;
+            flex: 0 0 auto;
+        }
+        
+        .model-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .model-content {
+            padding: 2rem;
+        }
+        
+        .model-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .model-description {
+            color: var(--secondary-color);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .model-benefits {
+            margin-top: 1.5rem;
+        }
+        
+        .model-benefits h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+        
+        .benefit-icon {
+            color: var(--primary-color);
+            margin-right: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .benefit-text {
+            color: var(--secondary-color);
+            line-height: 1.5;
+        }
+        
+        /* CTA-Sektion */
+        .cta-section {
+            background-color: white;
+            padding: 4rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        .cta-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(138, 86, 201, 0.3);
+        }
+        
+        /* FAQ-Sektion */
+        .faq-section {
+            margin-bottom: 5rem;
+        }
+        
+        .faq-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background-color: rgba(138, 86, 201, 0.05);
+        }
+        
+        .faq-question::after {
+            content: "+";
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: "−";
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+        
+        .faq-answer p {
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: white;
+            padding: 4rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-description {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .footer-copyright {
+            color: #aaa;
+        }
+        
+        .footer-legal {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .footer-legal a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-legal a:hover {
+            color: white;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .fade-in-delay-1 {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.2s;
+        }
+        
+        .fade-in-delay-2 {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.4s;
+        }
+        
+        .fade-in-delay-3 {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.6s;
+        }
+        
+        /* Responsives Design */
+        @media (max-width: 1100px) {
+            .process-step {
+                width: 48%;
+                min-width: 200px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .partnership-section h2, .models-section h2, .case-studies h2, .cta-section h2, .faq-section h2 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 1rem 2rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .cta-section {
+                padding: 2rem;
+            }
+            
+            .models-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .model-card {
+                width: 100%;
+            }
+            
+            .process-step {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="Image/logo2.png" alt="Brand Agent Logo">
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="brands.html" class="active">Brands</a>
+                <a href="agents.html">Agents</a>
+                <a href="kontakt.html">Kontakt</a>
+            </div>
+            <div class="mobile-menu">☰</div>
+        </div>
+    </nav>
+    
+    <header class="page-header">
+        <h1 class="fade-in">Brand Shops</h1>
+        <p class="fade-in-delay-1">Wir bieten Ihnen die Möglichkeit, Ihr eigenes E-Commerce-Geschäft mit Gewinnbeteiligung aufzubauen und Ihre einzigartige Eigenmarke zu entwickeln.</p>
+    </header>
+    
+    <main>
+        <section class="container partnership-section fade-in-delay-2">
+            <h2>So funktioniert unsere Zusammenarbeit</h2>
+            <p>Wir bieten ein einzigartiges Geschäftsmodell, bei dem wir gemeinsam mit Ihnen einen erfolgreichen Onlineshop aufbauen und Ihre eigene Marke entwickeln. Sie profitieren von unserer Expertise und erhalten eine Gewinnbeteiligung.</p>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>Bedarfsanalyse</h3>
+                    <p>Wir analysieren Ihren Markt, Ihre Zielgruppe und Ihre Geschäftsziele, um eine maßgeschneiderte Strategie zu entwickeln.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>Konzept & Strategie</h3>
+                    <p>Gemeinsam erarbeiten wir ein Konzept für Ihren Onlineshop und entwickeln eine Strategie für Ihre Eigenmarke.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>Entwicklung & Umsetzung</h3>
+                    <p>Wir übernehmen die technische Umsetzung des Shops, das Design, die Produktentwicklung und die Eigenmarken-Kreation.</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3>Marketing & Vertrieb</h3>
+                    <p>Wir implementieren effektive Marketing-Strategien, um Ihren Shop zu bewerben und den Verkauf Ihrer Eigenmarkenprodukte zu fördern.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="container models-section fade-in-delay-3">
+            <h2>Unsere Partnerschaftsmodelle</h2>
+            <p>Wir bieten verschiedene Modelle der Zusammenarbeit an, die auf Ihre individuellen Bedürfnisse und Ziele zugeschnitten sind.</p>
+            
+            <div class="models-grid">
+                <div class="model-card">
+                    <div class="model-content">
+                        <h3 class="model-title">Onlineshop mit Lizenzvereinbarung</h3>
+                        <p class="model-description">Wir übernehmen die Entwicklung, den Betrieb und das Marketing Ihres Onlineshops, während Sie von einer attraktiven Lizenzvereinbarung profitieren.</p>
+                        
+                        <div class="model-benefits">
+                            <h4>Ihre Vorteile:</h4>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span class="benefit-text">Minimale Anfangsinvestition</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span class="benefit-text">Professioneller Onlineshop ohne eigene Ressourcen</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span class="benefit-text">Attraktive Lizenzvereinbarung</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span class="benefit-text">Komplettes Fulfillment durch uns</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="model-content">
+                        <h3 class="model-title">Eigenmarken-Entwicklung</h3>
+                        <p class="model-description">Wir konzipieren und entwickeln Ihre exklusive Eigenmarke von der Idee bis zum fertigen Produkt. Sie erhalten eine Marke, die perfekt zu Ihrem Unternehmen passt.</p>
+                        
+                        <div class="model-benefits">
+                            <h4>Ihre Vorteile:</h4>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span class="benefit-text">Einzigartige Markenidentität</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span class="benefit-text">Höhere Margen durch Eigenmarkenprodukte</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span class="benefit-text">Produktentwicklung und Beschaffung</span>
+                            </div>
+                            <div class="benefit-item">
+                                <span class="benefit-icon">✓</span>
+                                <span class="benefit-text">Stärkere Kundenbindung</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="container cta-section">
+            <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; color: #8a56c9;">Bereit für den nächsten Schritt?</h2>
+            <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem; line-height: 1.6; color: #8a56c9;">Kontaktieren Sie uns noch heute für ein unverbindliches Beratungsgespräch und erfahren Sie, wie wir gemeinsam Ihre Geschäftsidee in die Realität umsetzen können.</p>
+            <a href="kontakt.html" class="cta-btn" style="backdrop-filter: blur(12px); background: rgba(255,255,255,0.25); border: 1.5px solid rgba(255,255,255,0.3); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); color: #8a56c9;">Jetzt Termin vereinbaren</a>
+        </section>
+        
+        <section class="container faq-section">
+            <h2>Häufig gestellte Fragen</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Wie hoch ist die Anfangsinvestition für einen Onlineshop mit Gewinnbeteiligung?</div>
+                <div class="faq-answer">
+                    <p>Die Höhe der Anfangsinvestition variiert je nach Umfang und Komplexität des Projekts. Wir bieten flexible Modelle an, die auch mit minimaler Anfangsinvestition starten können. In einem persönlichen Gespräch analysieren wir Ihre Bedürfnisse und erstellen ein maßgeschneidertes Angebot, das Ihren finanziellen Möglichkeiten entspricht.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Wie funktioniert die Gewinnbeteiligung genau?</div>
+                <div class="faq-answer">
+                    <p>Die Gewinnbeteiligung basiert auf einem transparenten Modell, bei dem Sie einen festgelegten Prozentsatz des Nettogewinns erhalten. Je nach Vereinbarung kann dieser zwischen 20% und 30% liegen. Wir erstellen monatliche Abrechnungen und detaillierte Berichte, damit Sie stets den vollen Überblick über die Geschäftsentwicklung haben.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Wie lange dauert es, bis mein Onlineshop live geht?</div>
+                <div class="faq-answer">
+                    <p>Die Entwicklungszeit für einen Onlineshop beträgt in der Regel 2-3 Monate. Dies umfasst die Konzeption, das Design, die technische Umsetzung und das Onboarding der ersten Produkte. Bei der Eigenmarkenentwicklung kommen je nach Produktkategorie weitere 2-4 Monate für die Produktentwicklung und Produktion hinzu.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Welche Kontrolle habe ich über meine Eigenmarke?</div>
+                <div class="faq-answer">
+                    <p>Sie behalten die volle kreative Kontrolle über Ihre Eigenmarke. Wir arbeiten eng mit Ihnen zusammen, um sicherzustellen, dass die Marke Ihre Vision und Werte widerspiegelt. Von der Namensgebung über das Logo-Design bis hin zur Produktauswahl – Sie haben das letzte Wort. Gleichzeitig profitieren Sie von unserer Expertise in Markenentwicklung und Produktionsmanagement.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Wer kümmert sich um Logistik und Kundenservice?</div>
+                <div class="faq-answer">
+                    <p>Wir bieten ein Full-Service-Modell an, bei dem wir die gesamte Logistik, das Fulfillment und den Kundenservice übernehmen. Das umfasst die Lagerhaltung, den Versand, die Retouren-Abwicklung und den Kundensupport. Sie können sich auf die strategischen Aspekte Ihres Geschäfts konzentrieren, während wir uns um das operative Tagesgeschäft kümmern.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">Digitale Prozessautomatisierungen</div>
+                <p class="footer-description">BrandAgent stärkt Ihre Markenpräsenz mit innovativen Brandshops und begleitet Sie bei der Automatisierung Ihrer Geschäftsprozesse – für mehr Erfolg, Effizienz und digitale Sichtbarkeit.</p>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/company/brandagentgmbh/" target="_blank" aria-label="LinkedIn">in</a>
+                </div>
+            </div>
+            <div>
+                <h3 class="footer-title">Links</h3>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="brands.html">Brands</a>
+                    <a href="agents.html">Agents</a>
+                    <a href="kontakt.html">Kontakt</a>
+                </div>
+            </div>
+            <div>
+                <h3 class="footer-title">Kontakt</h3>
+                <div class="footer-links">
+                    <a href="mailto:info@brandagent.ch">info@brandagent.ch</a>
+                    <a>Waldetenstrasse 23, 6343 Rotkreuz</a>
+                    <a>UID: CHE-204.407.181</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copyright">&copy; 2025 Brand Agent GmbH. Alle Rechte vorbehalten.</div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            // FAQ Toggle
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.parentElement;
+                    faqItem.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

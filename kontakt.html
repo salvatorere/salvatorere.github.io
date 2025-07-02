@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - Brand Agent GmbH</title>
+    <link rel="icon" href="/api/placeholder/32/32" type="image/x-icon">
+    <style>
+        /* Globale Stile */
+        :root {
+            --primary-color: #8a56c9;
+            --secondary-color: #86868b;
+            --background-color: #f5f5f7;
+            --text-color: #1d1d1f;
+            --accent-color: #7040b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            width: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            max-width: 280px;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+        }
+        
+        .logo span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+        
+        /* Header */
+        .page-header {
+            padding-top: 120px;
+            padding-bottom: 40px;
+            background: linear-gradient(135deg, #f5f5f7 0%, #e0e0e3 100%);
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Hauptcontainer */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        /* Team Section */
+        .team-section {
+            margin-bottom: 5rem;
+            text-align: center;
+        }
+        
+        .team-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+        
+        .team-members {
+            display: flex;
+            justify-content: center;
+            gap: 5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .team-member {
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        .team-member-image {
+            width: 280px;
+            height: 350px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid white;
+        }
+        
+        .team-member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+        }
+        
+        .team-member h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .team-member p {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+        
+        /* Kontakt-Sektion */
+        .contact-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+        
+        .contact-info h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .contact-info p {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(138, 86, 201, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        
+        .contact-text {
+            color: var(--secondary-color);
+        }
+        
+        .contact-text strong {
+            display: block;
+            color: var(--text-color);
+            margin-bottom: 0.3rem;
+        }
+        
+        .contact-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .contact-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(138, 86, 201, 0.1);
+            border-radius: 50%;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-social a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(138, 86, 201, 0.2);
+        }
+        
+        /* Formular */
+        .contact-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(138, 86, 201, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-check-input {
+            margin-top: 0.3rem;
+            margin-right: 0.5rem;
+        }
+        
+        .form-check-label {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(138, 86, 201, 0.3);
+        }
+        
+        /* FAQ-Sektion */
+        .faq-section {
+            margin-bottom: 5rem;
+        }
+        
+        .faq-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background-color: rgba(138, 86, 201, 0.05);
+        }
+        
+        .faq-question::after {
+            content: "+";
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: "−";
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+        
+        .faq-answer p {
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: white;
+            padding: 4rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-description {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .footer-copyright {
+            color: #aaa;
+        }
+        
+        .footer-legal {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .footer-legal a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-legal a:hover {
+            color: white;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .fade-in-delay-1 {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.2s;
+        }
+        
+        .fade-in-delay-2 {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.4s;
+        }
+        
+        .fade-in-delay-3 {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.6s;
+        }
+        
+        /* Pop-up Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-content {
+            background-color: white;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(-50px);
+            transition: transform 0.3s ease;
+        }
+        
+        .popup-overlay.show .popup-content {
+            transform: translateY(0);
+        }
+        
+        .popup-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #d4edda;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .popup-icon svg {
+            width: 40px;
+            height: 40px;
+            color: #28a745;
+        }
+        
+        .popup-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .popup-message {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        
+        .popup-close-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-close-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(138, 86, 201, 0.3);
+        }
+
+        /* Responsives Design */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 1rem 2rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .contact-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-members {
+                gap: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="Image/logo2.png" alt="Brand Agent Logo">
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="brands.html">Brands</a>
+                <a href="agents.html">Agents</a>
+                <a href="kontakt.html" class="active">Kontakt</a>
+            </div>
+            <div class="mobile-menu">☰</div>
+        </div>
+    </nav>
+    
+    <header class="page-header">
+        <h1 class="fade-in">Kontakt</h1>
+        <p class="fade-in-delay-1">Sie haben Fragen? Schreiben Sie uns – wir antworten schnell und persönlich!</p>
+    </header>
+    
+    <main>
+        <!-- Team-Sektion mit persönlichem Touch -->
+        <section class="container team-section fade-in-delay-2">
+            <h2>Unser Team</h2>
+            <div class="team-members">
+                <div class="team-member">
+                    <div class="team-member-image">
+                        <img src="Image/Foto1.jpeg" alt="Silvio Glarner">
+                    </div>
+                    <h3>Silvio Glarner</h3>
+                    <p>Founder<br>Dipl. Betriebswirtschafter</p>
+                    <p style="font-size: 1rem; color: var(--secondary-color); margin-top: 0.5rem;">Ich freue mich auf Ihre Nachricht und stehe Ihnen gerne persönlich zur Verfügung!</p>
+                </div>
+                <div class="team-member">
+                    <div class="team-member-image">
+                        <img src="Image/Foto2.jpeg" alt="Salvatore Reccardo" style="object-position: 30% 80%; object-fit: cover; width: 100%; height: 100%;">
+                    </div>
+                    <h3>Salvatore Reccardo</h3>
+                    <p>Founder<br>Dipl. Unternehmensprozessetechniker</p>
+                    <p style="font-size: 1rem; color: var(--secondary-color); margin-top: 0.5rem;">Ich unterstütze Sie gerne bei allen Anliegen rund um unsere Leistungen!</p>
+                </div>
+            </div>
+        </section>
+        <!-- Kontaktmöglichkeiten prominent -->
+        <section class="container contact-section fade-in-delay-2" style="margin-bottom: 2rem;">
+            <div class="contact-info" style="margin-bottom: 2rem;">
+                <h2>So erreichen Sie uns direkt</h2>
+                <div class="contact-details" style="margin-bottom: 1rem;">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="var(--primary-color)"/>
+                            </svg>
+                        </div>
+                        <div class="contact-text">
+                            <strong>E-Mail</strong>
+                            <a href="mailto:info@brandagent.ch" style="color: var(--primary-color); text-decoration: none;">info@brandagent.ch</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-social" style="margin-bottom: 1rem;">
+                    <a href="https://www.linkedin.com/company/brandagentgmbh/" target="_blank">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="currentColor"/>
+                        </svg>
+                    </a>
+                </div>
+                <div style="font-size: 0.95rem; color: var(--secondary-color);">Oder nutzen Sie unser Kontaktformular:</div>
+            </div>
+            <!-- Erfolgsmeldung als Banner -->
+            <div id="formMessage" style="margin-bottom: 1rem; padding: 1rem; border-radius: 10px; display: none;"></div>
+            <div class="contact-form">
+                <form id="contactForm" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Name <span style="color: red;">*</span></label>
+                        <input type="text" id="name" name="name" class="form-control" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">E-Mail <span style="color: red;">*</span></label>
+                        <input type="email" id="email" name="email" class="form-control" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Telefon <span style="color: #aaa;">(optional)</span></label>
+                        <input type="tel" id="phone" name="phone" class="form-control" placeholder="z.B. +41 79 123 45 67">
+                    </div>
+                    <div class="form-group">
+                        <label for="company" class="form-label">Unternehmen <span style="color: #aaa;">(optional)</span></label>
+                        <input type="text" id="company" name="company" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Betreff <span style="color: red;">*</span></label>
+                        <input type="text" id="subject" name="subject" class="form-control" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Nachricht <span style="color: red;">*</span></label>
+                        <textarea id="message" name="message" class="form-control" required aria-required="true"></textarea>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="privacy" name="privacy" class="form-check-input" required aria-required="true">
+                        <label for="privacy" class="form-check-label">Ich habe die Datenschutzerklärung gelesen und bin mit der Verarbeitung meiner Daten einverstanden. <span style="color: red;">*</span></label>
+                    </div>
+                    <button type="button" class="submit-btn" id="submitBtn" onclick="sendContactForm()">Nachricht senden</button>
+                </form>
+                <div style="font-size: 0.9rem; color: var(--secondary-color); margin-top: 1rem;">Ihre Daten werden vertraulich behandelt und ausschliesslich zur Bearbeitung Ihrer Anfrage verwendet.</div>
+            </div>
+        </section>
+        <!-- FAQ bleibt am Ende -->
+        <section class="container faq-section">
+            <h2>Häufig gestellte Fragen</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Wie lange dauert es, bis ich eine Antwort auf meine Anfrage erhalte?</div>
+                <div class="faq-answer">
+                    <p>Wir bemühen uns, alle Anfragen innerhalb von 24 Stunden (an Werktagen) zu beantworten. Bei komplexeren Anfragen oder während besonders geschäftiger Zeiten kann es gelegentlich etwas länger dauern. Sie können sicher sein, dass wir Ihre Anfrage so schnell wie möglich bearbeiten werden.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Kann ich einen persönlichen Beratungstermin vereinbaren?</div>
+                <div class="faq-answer">
+                    <p>Ja, wir bieten kostenlose Erstberatungen an. Sie können über das Kontaktformular einen Termin anfragen oder uns direkt per E-Mail kontaktieren. Wir führen Beratungsgespräche sowohl in unseren Geschäftsräumen als auch virtuell per Video-Call durch, je nach Ihren Präferenzen und Möglichkeiten.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Arbeiten Sie auch international oder nur in der Schweiz?</div>
+                <div class="faq-answer">
+                    <p>Wir haben unseren Hauptsitz in der Schweiz, arbeiten aber mit Kunden und Partnern in verschiedenen europäischen Ländern zusammen. Unsere E-Commerce-Lösungen und Eigenmarken-Entwicklungen sind so konzipiert, dass sie international eingesetzt werden können. Kontaktieren Sie uns gerne, um zu besprechen, wie wir Ihnen in Ihrem spezifischen Markt helfen können.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Wie kann ich mich als Brand Agent bewerben?</div>
+                <div class="faq-answer">
+                    <p>Sie können sich als Brand Agent bewerben, indem Sie das Kontaktformular ausfüllen und im Betreff "Bewerbung als Brand Agent" angeben. Teilen Sie uns bitte auch Ihre relevanten Erfahrungen und Ihr Netzwerk mit. Alternativ können Sie uns direkt eine E-Mail an info@brandagent.ch senden. Nach Eingang Ihrer Bewerbung werden wir uns innerhalb weniger Tage bei Ihnen melden, um das weitere Vorgehen zu besprechen.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">Brand Agent GmbH</div>
+                <p class="footer-description">Ihr Partner für erfolgreiche E-Commerce-Strategien, Onlineshop-Entwicklung und Eigenmarkenaufbau mit Gewinnbeteiligung.</p>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/company/brandagentgmbh/" target="_blank"><span>in</span></a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="footer-title">Kontakt</h3>
+                <div class="footer-links">
+                    <a href="mailto:info@brandagent.ch">info@brandagent.ch</a>
+                    <a href="#">Waldetenstrasse 23, 6343 Rotkreuz</a>
+                    <a href="#">UID: CHE-204.407.181</a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="footer-title">Navigation</h3>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="brands.html">Brands</a>
+                    <a href="agents.html">Agents</a>
+                    <a href="kontakt.html">Kontakt</a>
+                    <a href="impressum.html">Impressum</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-copyright">&copy; 2025 Brand Agent GmbH. Alle Rechte vorbehalten.</div>
+        </div>
+    </footer>
+    
+    <!-- Erfolgs-Pop-up -->
+    <div id="successPopup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h3 class="popup-title">Nachricht erfolgreich gesendet!</h3>
+            <p class="popup-message">
+                Vielen Dank für Ihre Kontaktanfrage! Wir haben Ihre Nachricht erhalten und werden uns innerhalb von 24 Stunden bei Ihnen melden.
+            </p>
+            <button class="popup-close-btn" onclick="closeSuccessPopup()">Verstanden</button>
+        </div>
+    </div>
+    
+    <script>
+        // Pop-up Funktionen
+        function showSuccessPopup() {
+            const popup = document.getElementById('successPopup');
+            popup.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Verhindert Scrollen im Hintergrund
+        }
+        
+        function closeSuccessPopup() {
+            const popup = document.getElementById('successPopup');
+            popup.classList.remove('show');
+            document.body.style.overflow = 'auto'; // Erlaubt wieder Scrollen
+        }
+        
+        // Pop-up schließen beim Klick auf Overlay
+        document.getElementById('successPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSuccessPopup();
+            }
+        });
+        
+        // Pop-up schließen mit Escape-Taste
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSuccessPopup();
+            }
+        });
+        
+        // Direkte Funktion für Button-Click
+        async function sendContactForm() {
+            console.log('sendContactForm called');
+            
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const formMessage = document.getElementById('formMessage');
+            
+            // Formular-Validierung
+            if (!contactForm.checkValidity()) {
+                contactForm.reportValidity();
+                return;
+            }
+            
+            // Button deaktivieren und Text ändern
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Wird gesendet...';
+            
+            // Formulardaten sammeln
+            const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData);
+            console.log('Form data:', data);
+            
+            try {
+                const response = await fetch('/send-contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                console.log('Server response:', result);
+                
+                if (result.success) {
+                    // Pop-up anzeigen
+                    showSuccessPopup();
+                    
+                    // Formular zurücksetzen
+                    contactForm.reset();
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                // Fehlermeldung anzeigen
+                formMessage.style.display = 'block';
+                formMessage.style.backgroundColor = '#f8d7da';
+                formMessage.style.color = '#721c24';
+                formMessage.style.border = '1px solid #f5c6cb';
+                formMessage.innerHTML = '❌ Entschuldigung, beim Senden der Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt per E-Mail.';
+            }
+            
+            // Button wieder aktivieren
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Nachricht senden';
+        }
+
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            // FAQ Toggle
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.parentElement;
+                    faqItem.classList.toggle('active');
+                });
+            });
+            
+            // Kontaktformular ist jetzt über onclick="sendContactForm()" verbunden
+        });
+    </script>
+</body>
+</html>

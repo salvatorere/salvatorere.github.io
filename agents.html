@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agents - Brand Agent GmbH</title>
+    <link rel="icon" href="/api/placeholder/32/32" type="image/x-icon">
+    <style>
+        /* Globale Stile */
+        :root {
+            --primary-color: #8a56c9;
+            --secondary-color: #86868b;
+            --background-color: #f5f5f7;
+            --text-color: #1d1d1f;
+            --accent-color: #7040b0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            width: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            max-width: 280px;
+        }
+        
+        .logo a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+        }
+        
+        .logo span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+        }
+        
+        /* Header für Unterseiten */
+        .page-header {
+            padding-top: 120px;
+            padding-bottom: 40px;
+            background: linear-gradient(135deg, #f5f5f7 0%, #e0e0e3 100%);
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Hauptcontainer */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        /* Intro-Sektion */
+        .intro {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .intro h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .intro p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        /* AI-Agents Sektion */
+        .agents-overview {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+        }
+        
+        .agent-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .agent-section:nth-child(even) {
+            direction: rtl;
+        }
+        
+        .agent-section:nth-child(even) .agent-content {
+            direction: ltr;
+        }
+        
+        .agent-section:nth-child(even) .agent-image {
+            direction: ltr;
+        }
+        
+        .agent-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .agent-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .agent-content {
+            padding: 2rem;
+        }
+        
+        .agent-content h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .agent-content p {
+            color: var(--secondary-color);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .agent-features {
+            margin-bottom: 2rem;
+        }
+        
+        .agent-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .agent-feature-icon {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .agent-feature-text {
+            color: var(--secondary-color);
+        }
+        
+        .learn-more-btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .learn-more-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(138, 86, 201, 0.3);
+        }
+        
+        /* FAQ-Sektion */
+        .faq-section {
+            margin-bottom: 5rem;
+        }
+        
+        .faq-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background-color: rgba(138, 86, 201, 0.05);
+        }
+        
+        .faq-question::after {
+            content: "+";
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question::after {
+            content: "−";
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+        
+        .faq-answer p {
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+        
+        /* CTA-Sektion */
+        .cta {
+            background: none;
+            color: #8a56c9;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 6rem 1.5rem;
+            margin: 4rem auto 0 auto;
+            max-width: 900px;
+        }
+        
+        .cta-container {
+            text-align: center;
+        }
+        
+        .cta-container h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-container p {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        .cta-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(138, 86, 201, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--text-color);
+            color: white;
+            padding: 4rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-description {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .footer-copyright {
+            color: #aaa;
+        }
+        
+        .footer-legal {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .footer-legal a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .footer-legal a:hover {
+            color: white;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .fade-in-delay-1 {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.2s;
+        }
+        
+        .fade-in-delay-2 {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.4s;
+        }
+        
+        .fade-in-delay-3 {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.6s;
+        }
+        
+        /* Responsives Design */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .intro h2, .agent-content h3, .faq-section h2 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 1rem 2rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .cta {
+                padding: 2rem;
+            }
+            
+            .agent-section {
+                direction: ltr;
+            }
+            
+            .agent-section:nth-child(even) {
+                direction: ltr;
+            }
+            
+            .agent-image {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="Image/logo2.png" alt="Brand Agent Logo">
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="brands.html">Brands</a>
+                <a href="agents.html" class="active">Agents</a>
+                <a href="kontakt.html">Kontakt</a>
+            </div>
+            <div class="mobile-menu">☰</div>
+        </div>
+    </nav>
+    
+    <!-- Seitenheader -->
+    <header class="page-header">
+        <h1 class="fade-in">Digitale Prozessautomatisierung</h1>
+        <p class="fade-in-delay-1">Reduzieren Sie manuelle, wiederkehrende Aufgaben und schaffen Sie Freiraum für das, was wirklich zählt.</p>
+    </header>
+    
+    <!-- Hauptinhalt -->
+    <main class="container">
+        <!-- Intro-Sektion -->
+        <section class="intro">
+            <h2 class="fade-in">Die Zukunft der Automatisierung</h2>
+            <p class="fade-in-delay-1">Moderne Automatisierung verändert grundlegend, wie Unternehmen ihre digitale Präsenz steuern. Durch intelligente Systeme werden wiederkehrende Aufgaben effizient übernommen – so bleibt mehr Zeit für strategische und kreative Tätigkeiten. Arbeiten Sie strukturierter, schneller und mit klarem Fokus auf das Wesentliche.</p>
+        </section>
+        
+        <!-- AI-Agents Übersicht -->
+        <section class="agents-overview">
+            <!-- Individuelle Automatisierungslösungen Agent (jetzt zuerst) -->
+            <div class="agent-section">
+                <div class="agent-image fade-in-delay-1">
+                    <img src="Image/Digital.png" alt="Digital Icon" style="object-fit:cover; width:100%; height:100%;">
+                </div>
+                <div class="agent-content fade-in-delay-2">
+                    <h3>Individuelle Automatisierungslösungen für Ihr Unternehmen</h3>
+                    <p>Wir entwickeln massgeschneiderte Automatisierungs-Agents, die genau auf Ihre Geschäftsprozesse und Anwendungsfälle abgestimmt sind. Ob Support, internes Routing oder spezifische Workflows – Sie definieren den Bedarf, wir liefern die passende Lösung.</p>
+                    <div class="agent-features">
+                        <div class="agent-feature">
+                            <div class="agent-feature-icon">✓</div>
+                            <div class="agent-feature-text">Automatisierung individueller Prozesse ohne manuelles Eingreifen</div>
+                        </div>
+                        <div class="agent-feature">
+                            <div class="agent-feature-icon">✓</div>
+                            <div class="agent-feature-text">Unterstützung verschiedener Sprachen und Szenarien</div>
+                        </div>
+                        <div class="agent-feature">
+                            <div class="agent-feature-icon">✓</div>
+                            <div class="agent-feature-text">Nahtlose Integration in bestehende Systeme und Plattformen</div>
+                        </div>
+                        <div class="agent-feature">
+                            <div class="agent-feature-icon">✓</div>
+                            <div class="agent-feature-text">Laufende Optimierung durch Auswertung realer Nutzungsdaten</div>
+                        </div>
+                    </div>
+                    <a href="kontakt.html" class="learn-more-btn">Mehr erfahren</a>
+                </div>
+            </div>
+            <!-- Smart Video Agent (ehemals Social Media Agent) -->
+            <div class="agent-section">
+                <div class="agent-image fade-in-delay-1">
+                    <img src="Image/SVA.png" alt="Smart Video Agent" style="object-fit:cover; width:100%; height:100%;">
+                </div>
+                <div class="agent-content fade-in-delay-2">
+                    <h3>Smart Video Agent</h3>
+                    <div class="agent-features">
+                        <div class="agent-feature">
+                            <div class="agent-feature-icon">✓</div>
+                            <div class="agent-feature-text">Vollautomatische Videoerstellung aus einem Online-Formular</div>
+                        </div>
+                        <div class="agent-feature">
+                            <div class="agent-feature-icon">✓</div>
+                            <div class="agent-feature-text">Direkter Upload auf mehrere Plattformen ohne Mehraufwand</div>
+                        </div>
+                        <div class="agent-feature">
+                            <div class="agent-feature-icon">✓</div>
+                            <div class="agent-feature-text">Keine Videobearbeitungs-Kenntnisse erforderlich</div>
+                        </div>
+                        <div class="agent-feature">
+                            <div class="agent-feature-icon">✓</div>
+                            <div class="agent-feature-text">Kostengünstiger als manuelle Produktion oder Agentur</div>
+                        </div>
+                        <div class="agent-feature">
+                            <div class="agent-feature-icon">✓</div>
+                            <div class="agent-feature-text">Skalierbarkeit: Mehr Content in kürzerer Zeit möglich</div>
+                        </div>
+                        <div class="agent-feature">
+                            <div class="agent-feature-icon">✓</div>
+                            <div class="agent-feature-text">Bessere Sichtbarkeit durch gleichmäßige und strategische Postings</div>
+                        </div>
+                    </div>
+                    <a href="kontakt.html" class="learn-more-btn">Mehr erfahren</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ-Sektion -->
+        <section class="faq-section">
+            <h2>Häufig gestellte Fragen</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Können die Agents in meine bestehenden Systeme integriert werden?</div>
+                <div class="faq-answer">
+                    <p>Ja, unsere Agents wurden entwickelt, um nahtlos mit einer Vielzahl von bestehenden Systemen und Plattformen zu arbeiten. Wir bieten Integrationen mit gängigen CMS-Systemen, CRM-Tools, E-Commerce-Plattformen und Social-Media-Kanälen. Für spezielle Anforderungen bieten wir auch individuelle Integrationslösungen an.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Wie sicher sind die Agents?</div>
+                <div class="faq-answer">
+                    <p>Sicherheit hat für uns höchste Priorität. Alle unsere Agents wurden mit modernsten Sicherheitsprotokollen entwickelt und regelmäßig auf Schwachstellen überprüft. Wir setzen Verschlüsselungstechnologien ein, um sensible Daten zu schützen, und alle Agents entsprechen den aktuellen Datenschutzbestimmungen, einschließlich der DSGVO. Zusätzlich führen wir regelmäßige Sicherheitsaudits durch, um die höchsten Standards zu gewährleisten.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Benötige ich technisches Know-how, um die Agents zu nutzen?</div>
+                <div class="faq-answer">
+                    <p>Nein, unsere Agents wurden entwickelt, um benutzerfreundlich und intuitiv zu sein. Sie benötigen kein technisches Fachwissen, um von den Vorteilen unserer KI-Lösungen zu profitieren. Wir bieten außerdem umfassende Schulungen und Support, um sicherzustellen, dass Sie das Beste aus Ihren Agents herausholen können.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Wie lange dauert die Integration und Einrichtung?</div>
+                <div class="faq-answer">
+                    <p>Die Integration und Einrichtung dauert bei normaler Kapazität in der Regel maximal eine Woche. Je nach Komplexität des Projekts kann der gesamte Prozess bis zu zwei Wochen in Anspruch nehmen.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA-Sektion -->
+        <section class="cta" style="background: none; color: #8a56c9; border-radius: 0; box-shadow: none; padding: 6rem 1.5rem; margin: 4rem auto 0 auto; max-width: 900px;">
+            <div class="cta-container">
+                <h2>Bereit für den nächsten Schritt?</h2>
+                <p>Kontaktieren Sie uns noch heute für ein unverbindliches Beratungsgespräch und erfahren Sie, wie wir gemeinsam Ihre Geschäftsidee in die Realität umsetzen können.</p>
+                <a href="kontakt.html" class="cta-btn" style="backdrop-filter: blur(12px); background: rgba(255,255,255,0.25); border: 1.5px solid rgba(255,255,255,0.3); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); color: #8a56c9;">Jetzt Termin vereinbaren</a>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">Digitale Prozessautomatisierungen</div>
+                <p class="footer-description">BrandAgent stärkt Ihre Markenpräsenz mit innovativen Brandshops und begleitet Sie bei der Automatisierung Ihrer Geschäftsprozesse – für mehr Erfolg, Effizienz und digitale Sichtbarkeit.</p>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/company/brandagentgmbh/" target="_blank" aria-label="LinkedIn">in</a>
+                </div>
+            </div>
+            <div>
+                <h3 class="footer-title">Links</h3>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="brands.html">Brands</a>
+                    <a href="agents.html">Agents</a>
+                    <a href="kontakt.html">Kontakt</a>
+                </div>
+            </div>
+            <div>
+                <h3 class="footer-title">Kontakt</h3>
+                <div class="footer-links">
+                    <a href="mailto:info@brandagent.ch">info@brandagent.ch</a>
+                    <a>Waldetenstrasse 23, 6343 Rotkreuz</a>
+                    <a>UID: CHE-204.407.181</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copyright">&copy; 2025 Brand Agent GmbH. Alle Rechte vorbehalten.</div>
+        </div>
+    </footer>
+    
+    <!-- Impressum Modal -->
+    <div id="impressum-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center;">
+        <div style="background-color: white; max-width: 800px; width: 90%; max-height: 90vh; overflow-y: auto; padding: 2rem; border-radius: 10px; position: relative;">
+            <button onclick="document.getElementById('impressum-modal').style.display='none'" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            
+            <h2 style="margin-bottom: 1.5rem; color: var(--primary-color);">Impressum</h2>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Angaben gemaß § 5 TMG</h3>
+            <p><strong>Brand Agent GmbH</strong><br>
+            Waldetenstrasse 23<br>
+            6343 Rotkreuz<br>
+            Schweiz</p>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Kontakt</h3>
+            <p>E-Mail: <a href="mailto:info@brandagent.ch" style="color: var(--primary-color);">info@brandagent.ch</a><br>
+            Website: <a href="https://www.brandagent.ch" style="color: var(--primary-color);">www.brandagent.ch</a></p>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Handelsregister</h3>
+            <p>UID: CHE-204.407.181</p>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Allgemeine Angaben</h3>
+            <p style="margin-bottom: 1rem;">Unsere Website enthält möglicherweise Links zu externen Websites, auf deren Inhalte wir keinen Einfluss haben. Wir können deshalb keine Verantwortung für die Inhalte externer Websites übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Wir haben die verlinkten Seiten zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft und keine rechtswidrigen Inhalte gefunden. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir jedoch derartige Links umgehend entfernen. Wir weisen darauf hin, dass wir nicht für den Inhalt von verlinkten Seiten haften.</p>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Urheberrecht</h3>
+            <p style="margin-bottom: 1rem;">Die auf dieser Website veröffentlichten Inhalte unterliegen dem Schweizer Urheberrecht. Jegliche Nutzung, Verbreitung oder Vervielfältigung ausserhalb der Grenzen des Urheberrechts bedarf der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+            
+            <p style="margin-top: 2rem; font-style: italic;">Letzter Stand: 16. April 2025</p>
+        </div>
+    </div>
+    
+    <!-- Datenschutz Modal -->
+    <div id="datenschutz-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center;">
+        <div style="background-color: white; max-width: 800px; width: 90%; max-height: 90vh; overflow-y: auto; padding: 2rem; border-radius: 10px; position: relative;">
+            <button onclick="document.getElementById('datenschutz-modal').style.display='none'" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            
+            <h2 style="margin-bottom: 1.5rem; color: var(--primary-color);">Datenschutzerklärung</h2>
+            
+            <p style="margin-bottom: 1rem;">Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. In dieser Datenschutzerklärung informieren wir Sie über die Erhebung, Verarbeitung und Nutzung Ihrer Daten bei der Nutzung unserer Website.</p>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Verantwortliche Stelle</h3>
+            <p><strong>Brand Agent GmbH</strong><br>
+            Waldetenstrasse 23<br>
+            6343 Rotkreuz<br>
+            Schweiz<br>
+            E-Mail: <a href="mailto:info@brandagent.ch" style="color: var(--primary-color);">info@brandagent.ch</a></p>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Erhebung und Verarbeitung persönlicher Daten</h3>
+            <p style="margin-bottom: 1rem;">Wenn Sie unsere Website besuchen, speichert unser Webserver standardmäßig die IP-Adresse Ihres Internetanbieters, die Website, von der aus Sie uns besuchen, die Websites, die Sie bei uns besuchen, sowie das Datum und die Dauer Ihres Besuchs. Diese Informationen sind für die technische Übermittlung der Webseiten und den sicheren Serverbetrieb zwingend erforderlich. Eine personalisierte Auswertung dieser Daten erfolgt nicht.</p>
+            
+            <p style="margin-bottom: 1rem;">Sofern Sie uns Daten über ein Formular zur Verfügung stellen, werden diese Daten in unserer Datenbank gespeichert und ausschließlich für die Bearbeitung Ihrer Anfrage verwendet. Ihre Daten werden streng vertraulich behandelt und nicht an Dritte weitergegeben, es sei denn, dies ist zur Erfüllung unserer vertraglichen Pflichten erforderlich oder gesetzlich vorgeschrieben.</p>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Kontaktformular</h3>
+            <p style="margin-bottom: 1rem;">Wenn Sie das Kontaktformular auf unserer Website nutzen, werden die von Ihnen angegebenen Daten (Name, E-Mail-Adresse, Telefonnummer, Unternehmen, Betreff und Nachricht) zur Bearbeitung Ihrer Anfrage gespeichert. Diese Daten werden nicht ohne Ihre Einwilligung an Dritte weitergegeben.</p>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Ihre Rechte</h3>
+            <p style="margin-bottom: 1rem;">Sie haben jederzeit das Recht auf Auskunft über die bezüglich Ihrer Person gespeicherten Daten, deren Herkunft und Empfänger sowie den Zweck der Speicherung. Darüber hinaus haben Sie das Recht auf Berichtigung, Löschung oder Sperrung Ihrer Daten.</p>
+            
+            <p style="margin-bottom: 1rem;">Wenn Sie Fragen zum Datenschutz haben oder von Ihren Rechten Gebrauch machen möchten, können Sie sich jederzeit an uns wenden.</p>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Änderungen der Datenschutzerklärung</h3>
+            <p style="margin-bottom: 1rem;">Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht oder um Änderungen unserer Leistungen in der Datenschutzerklärung umzusetzen. Für Ihren erneuten Besuch gilt dann die neue Datenschutzerklärung.</p>
+            
+            <p style="margin-top: 2rem; font-style: italic;">Letzter Stand: 16. April 2025</p>
+        </div>
+    </div>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            // FAQ Toggle
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.parentElement;
+                    faqItem.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
